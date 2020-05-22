@@ -1,0 +1,29 @@
+type User {
+  id: Int!
+  name: String!
+  username: String!
+  lastname: String!
+  bio: String!
+}
+
+type Mutation {
+  createAccount(data: userInput!): User!
+  inactiveAccount(id: Int!): User!
+  login(data: login!): authPayloadUser!
+}
+
+input login {
+  username: String!
+  password: String!
+}
+
+type authPayloadUser {
+  token: String!
+  user: User!
+}
+
+input userInput {
+  name: String!
+  lastname: String!
+  bio: String!
+}
