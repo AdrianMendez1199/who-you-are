@@ -8,7 +8,8 @@
     "compile": "tsc",
     "build": "npm-run-all clean compile",
     "watch": "nodemon",
-    "dev": "ts-node index.ts"
+    "dev": "ts-node index.ts",
+    "lint": "tslint --project ."
   },
   "dependencies": {
     "apollo-server": "^2.13.1",
@@ -25,6 +26,8 @@
     "nodemon": "^2.0.4",
     "npm-run-all": "^4.1.5",
     "ts-node": "^8.10.1",
+    "tslint": "^6.1.2",
+    "tslint-config-airbnb": "^5.11.2",
     "typescript": "^3.9.3"
   }
 }
