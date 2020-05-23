@@ -6,6 +6,10 @@ type User {
   bio: String!
 }
 
+type Query {
+  user(id: ID!): User!
+}
+
 type Mutation {
   createAccount(data: userInput!): User!
   inactiveAccount(id: Int!): User!
