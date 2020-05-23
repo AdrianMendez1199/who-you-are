@@ -5,8 +5,12 @@
   "license": "MIT",
   "private": true,
   "workspaces":[
-    "./src/db"
+    "src/db"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AdrianMendez1199/who-are-you-app.git"
+  },
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "tsc",
@@ -16,7 +20,7 @@
     "lint": "tslint --project ."
   },
   "dependencies": {
-    "who-are-you-db-module": "1.0.0",
+    "@who-are-you-db/db": "1.0.0",
     "apollo-server": "^2.13.1",
     "bcrypt": "^4.0.1",
     "cassandra-driver": "^4.5.2",
