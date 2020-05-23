@@ -1,8 +1,12 @@
 {
-  "name": "who-are-you",
+  "name": "who-you-are-backend-service",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "private": true,
+  "workspaces":[
+    "./src/db"
+  ],
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "tsc",
@@ -12,6 +16,7 @@
     "lint": "tslint --project ."
   },
   "dependencies": {
+    "who-are-you-db-module": "1.0.0",
     "apollo-server": "^2.13.1",
     "bcrypt": "^4.0.1",
     "cassandra-driver": "^4.5.2",
