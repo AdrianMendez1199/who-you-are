@@ -15,12 +15,11 @@ export default {
       const { db } = context;
 
       try {
-        const user = new db.User({
+        const user: User = new db.User({
           ...data,
-        });
+        }).save();
 
-        return user.save();
-
+        return user;
       } catch (e) {
         throw e;
       }
