@@ -1,6 +1,6 @@
-import db from '@who-are-you-db/db';
 
 export interface Context {
-  db: typeof db;
+  db: any;
   request: object;
+  pubsub: any;
 }

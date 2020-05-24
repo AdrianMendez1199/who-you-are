@@ -1,0 +1,26 @@
+type Message {
+ id: ID!
+ message: String!
+ to: ID!
+}
+
+type Mutation {
+    sendMessage(to: ID!, message: String): Message!
+}
+
+type Subscription {
+    newMessage(id: ID!): newMessagePayload!
+}
+
+scalar Date
+
+type newMessagePayload {
+ data: CustomMessage
+}
+
+type CustomMessage {
+  _id: ID,
+  message: String,
+  to: ID,
+  sendAt: Date,
+}
