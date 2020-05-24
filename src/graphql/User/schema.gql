@@ -1,20 +1,37 @@
 type User {
-  id: Int!
+  id: ID!
   name: String!
   username: String!
   lastname: String!
+  userProfile: UserProfile!
+}
+
+type UserProfile {
+  age: Int!
   bio: String!
+  imgProfile: String!
+}
+
+type Query {
+  user(id: ID!): [User!]!
 }
 
 type Mutation {
   createAccount(data: userInput!): User!
   inactiveAccount(id: Int!): User!
   login(data: login!): authPayloadUser!
+  uploadProfile(userId: ID!, data: userProfileInput!): UserProfile!
 }
 
 input login {
   username: String!
   password: String!
+}
+
+input userProfileInput {
+  age: Int!
+  bio: String!
+  imgProfile: String!
 }
 
 type authPayloadUser {
@@ -25,5 +42,6 @@ type authPayloadUser {
 input userInput {
   name: String!
   lastname: String!
-  bio: String!
+  username: String!
+  password: String!
 }

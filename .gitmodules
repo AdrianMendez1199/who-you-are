@@ -1,0 +1,4 @@
+[submodule "src/db"]
+	path = src/db
+	url = git@github.com:AdrianMendez1199/who-are-you-db-module.git
+	ignore = dirty
