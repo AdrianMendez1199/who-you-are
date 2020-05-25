@@ -4,6 +4,10 @@ import { User } from '../types/User';
 
 const SECRET = process.env.JWT_SECRET_TOKEN || '';
 
+export interface Request {
+  get(data: string): string;
+}
+
 /**
  * compare plain password and encripted password
  * using bcrypt
@@ -35,3 +39,15 @@ export async function generatePassword(password: string): Promise<string> {
 export function generateToken(user: User): string {
   return jwt.sign({ user }, SECRET, { expiresIn: '24h' });
 }
+
+/**
+ * this function
+ * check if token is valid
+ * @param req
+ */
+export function tokenIsValid(req: Request): string | object {
+  const header = req.get('Authorization');
+  const token: string =  header.replace('Bearer ', '');
+  return jwt.verify(token, SECRET);
+}
+
