@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { User } from '../types/User';
 
-const SECRET = process.env.JWT_SECRET_TOKEN || '';
+const SECRET = process.env.JWT_SECRET_TOKEN || 'development';
 
 export interface Request {
   get(data: string): string;
@@ -45,8 +45,7 @@ export function generateToken(user: User): string {
  * check if token is valid
  * @param req
  */
-export function tokenIsValid(req: Request): string | object {
-  const header = req.get('Authorization');
+export function tokenIsValid(header: string): string | object {
   const token: string =  header.replace('Bearer ', '');
   return jwt.verify(token, SECRET);
 }

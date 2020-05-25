@@ -3,6 +3,7 @@ import { resolvers, typeDefs } from './src/graphql';
 import db from '@who-are-you-db/db';
 import { Context } from './src/types/Context';
 import dotenv from 'dotenv';
+import { IsAuthenticated } from './src/utils/Directives';
 
 dotenv.config();
 
@@ -16,6 +17,7 @@ const server: ApolloServer = new ApolloServer({
   typeDefs,
   resolvers,
   context: (request): Context => ({ request, db, pubsub }),
+  schemaDirectives: { isAuthenticated: IsAuthenticated },
 });
 
 

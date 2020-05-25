@@ -5,11 +5,11 @@ type Message {
 }
 
 type Query {
-    getMessages(userId: ID!): [SendMessagePayload!]!
+    getMessages(userId: ID!): [SendMessagePayload!]! @isAuthenticated
 }
 
 type Mutation {
-    sendMessage(data: SendMessageInput!): Message!
+    sendMessage(data: SendMessageInput!): Message! @isAuthenticated
 }
 
 input SendMessageInput {
@@ -19,7 +19,7 @@ input SendMessageInput {
 }
 
 type Subscription {
-    newMessage(id: ID!): newMessagePayload!
+    newMessage(id: ID!): newMessagePayload! @isAuthenticated
 }
 
 scalar Date
