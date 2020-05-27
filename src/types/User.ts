@@ -9,3 +9,7 @@ export interface Auth {
   token: string;
   user: User;
 }
+
+export interface Friends {
+  friends: User[];
+}

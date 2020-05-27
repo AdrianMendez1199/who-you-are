@@ -1,20 +1,30 @@
 import { Context } from '../../types/Context';
-import { getTokenFromHeaders, tokenIsValid } from '../../utils/utils';
 
 export default {
   Query: {
-    getMyFriends: (_:void , args: any, context: Context) => {
+    getMyFriends: (_: void, args: any, context: Context) => {
       const { db, request } = context;
       // return db.Frind.find
     },
 
     getMyFriendRequest: () => { },
+
   },
 
   Mutation: {
-    addToMyFriend: () => {},
+    sendFriendRequest: (_: void, args: any, context: Context) => {
+      const { requester, recipient } = args;
+      const { db } = context;
 
-    acceptFriendRequest: () => {},
+      return new db.Friends({
+        requester,
+        recipient,
+        status: 1,
+      }).save();
+
+    },
+
+    acceptFriendRequest: () => { },
   },
 
 };
