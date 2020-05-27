@@ -1,4 +1,4 @@
-import { User } from '../../types/User';
+import { User, Auth } from '../../types/User';
 import { Context } from '../../types/Context';
 import {
   generatePassword,
@@ -36,7 +36,7 @@ export default {
       }
     },
 
-    login: async (_: void, args: any, context: Context) => {
+    login: async (_: void, args: any, context: Context): Promise<Auth> => {
       const { db } = context;
       const { data } = args;
 
