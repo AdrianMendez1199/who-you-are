@@ -1,6 +1,6 @@
 import { SchemaDirectiveVisitor, AuthenticationError } from 'apollo-server';
 import { defaultFieldResolver, GraphQLField } from 'graphql';
-import { tokenIsValid } from '../utils/utils';
+import { tokenIsValid, getTokenFromHeaders } from '../utils/utils';
 
 export class IsAuthenticated extends SchemaDirectiveVisitor {
   public visitFieldDefinition(field: GraphQLField<CallableFunction, CallableFunction>):
@@ -14,8 +14,9 @@ export class IsAuthenticated extends SchemaDirectiveVisitor {
       if (!context.request.req.headers.authorization) {
         throw new AuthenticationError('Not authenticate');
       }
+      const token: string =  getTokenFromHeaders(context.request);
+      console.log(tokenIsValid(token));
 
-      tokenIsValid(context.request.req.headers.authorization);
       return await originalResolve.apply(this, args);
     };
   }

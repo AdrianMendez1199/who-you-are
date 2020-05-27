@@ -50,3 +50,10 @@ export function tokenIsValid(header: string): string | object {
   return jwt.verify(token, SECRET);
 }
 
+/**
+ * get key autorization
+ * @param request
+ */
+export function getTokenFromHeaders(request: any): string {
+  return request.req.headers.authorization;
+}
