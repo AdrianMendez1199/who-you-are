@@ -15,7 +15,7 @@ export class IsAuthenticated extends SchemaDirectiveVisitor {
         throw new AuthenticationError('Not authenticate');
       }
       const token: string =  getTokenFromHeaders(context.request);
-      console.log(tokenIsValid(token));
+      tokenIsValid(token);
 
       return await originalResolve.apply(this, args);
     };

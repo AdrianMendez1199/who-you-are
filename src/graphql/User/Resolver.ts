@@ -64,8 +64,9 @@ export default {
   },
 
   User: {
-    posts(parent: any, args: any, context: Context) {
-      console.log(parent)
+    posts: async (parent: any, args: any, context: Context) =>  {
+      const { db } = context;
+      return await db.Post.find({ author: parent.id });
     },
   },
 };

@@ -10,19 +10,6 @@ type User {
 }
 
 
-type Post {
-  id: Int!
-  post: String!
-  commentaries: [Commentary!]
-}
-
-scalar Date
-
-type Commentary {
-  commentary: String
-  date: Date
-}
-
 type Query {
   user(id: ID!): [User!]! @isAuthenticated
 }
