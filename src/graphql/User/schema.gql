@@ -3,24 +3,22 @@ type User {
   name: String!
   username: String!
   lastname: String!
-  userProfile: UserProfile!
+  age: Int
+  bio: String
+  avatar: String
+  posts: [Post!]
 }
 
-type UserProfile {
-  age: Int!
-  bio: String!
-  imgProfile: String!
-}
 
 type Query {
-  user(id: ID!): [User!]!
+  user(id: ID!): [User!]! @isAuthenticated
 }
 
 type Mutation {
   createAccount(data: userInput!): User!
-  inactiveAccount(id: Int!): User!
+  inactiveAccount(id: Int!): User! @isAuthenticated
   login(data: login!): authPayloadUser!
-  uploadProfile(userId: ID!, data: userProfileInput!): UserProfile!
+  uploadProfile(userId: ID!, data: userProfileInput!): User! @isAuthenticated
 }
 
 input login {
@@ -45,3 +43,5 @@ input userInput {
   username: String!
   password: String!
 }
+
+directive @isAuthenticated on QUERY | FIELD | FIELD_DEFINITION

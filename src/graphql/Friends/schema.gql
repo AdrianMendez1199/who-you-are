@@ -1,0 +1,14 @@
+type Friend {
+   user: User!
+}
+
+
+type Query {
+    getMyFriends(id: ID!): [Friend!]
+    getMyFriendRequest(id: ID!): [Friend!]!
+}
+
+type Mutation {
+    sendFriendRequest(requester: ID!, recipient: ID!): Friend!
+    acceptFriendRequest(requester: ID!): Friend!
+}

@@ -4,23 +4,34 @@ type Message {
  to: ID!
 }
 
+type Query {
+    getMessages(userId: ID!): [SendMessagePayload!]! @isAuthenticated
+}
+
 type Mutation {
-    sendMessage(to: ID!, message: String): Message!
+    sendMessage(data: SendMessageInput!): Message! @isAuthenticated
+}
+
+input SendMessageInput {
+ to: ID!
+ message: String 
+ sentBy: ID!
 }
 
 type Subscription {
-    newMessage(id: ID!): newMessagePayload!
+    newMessage(id: ID!): newMessagePayload! @isAuthenticated
 }
 
 scalar Date
 
 type newMessagePayload {
- data: CustomMessage
+ data: SendMessagePayload!
 }
 
-type CustomMessage {
+type SendMessagePayload {
   _id: ID,
   message: String,
-  to: ID,
+  to: User!,
+  sentBy: User!
   sendAt: Date,
 }

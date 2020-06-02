@@ -1,0 +1,22 @@
+type Post {
+  id: Int!
+  post: String!
+  commentaries: [Commentary!]
+}
+
+scalar Date
+
+type Commentary {
+  commentary: String
+  date: Date
+}
+
+type Mutation {
+    createPost(data: PostInput!): Post!
+}
+
+
+input PostInput {
+    author: ID!
+    post: String!
+}

@@ -1,9 +1,10 @@
-import { User } from '../../types/User';
+import { User, Auth } from '../../types/User';
 import { Context } from '../../types/Context';
 import {
   generatePassword,
   comparePassword,
-  generateToken } from '../../utils/utils';
+  generateToken,
+} from '../../utils/utils';
 
 
 export default {
@@ -15,7 +16,7 @@ export default {
   },
 
   Mutation: {
-    createAccount: async(_: void, args: any, context: Context): Promise<User> => {
+    createAccount: async (_: void, args: any, context: Context): Promise<User> => {
       const { data } = args;
       const { db } = context;
 
@@ -35,12 +36,13 @@ export default {
       }
     },
 
-    login: async (_:void, args: any, context: Context) => {
+    login: async (_: void, args: any, context: Context): Promise<Auth> => {
       const { db } = context;
       const { data } = args;
 
       const user = await db.User
-        .findOne({ username:  data.username });
+        .findOne({ username: data.username })
+        .select('+password');
 
       if (!user) {
         throw new Error('Invalid Credentials');
@@ -52,10 +54,19 @@ export default {
         throw new Error('Invalid Credentials');
       }
 
+
       return {
-        user, token: generateToken(user),
+        user: user.toJSON(),
+        token: generateToken(user.toJSON()),
       };
 
+    },
+  },
+
+  User: {
+    posts: async (parent: any, args: any, context: Context) =>  {
+      const { db } = context;
+      return await db.Post.find({ author: parent.id });
     },
   },
 };
