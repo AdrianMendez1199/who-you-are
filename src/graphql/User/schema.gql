@@ -3,13 +3,24 @@ type User {
   name: String!
   username: String!
   lastname: String!
-  userProfile: UserProfile!
+  age: Int
+  bio: String
+  avatar: String
+  posts: [Post!]
 }
 
-type UserProfile {
-  age: Int!
-  bio: String!
-  imgProfile: String!
+
+type Post {
+  id: Int!
+  post: String!
+  commentaries: [Commentary!]
+}
+
+scalar Date
+
+type Commentary {
+  commentary: String
+  date: Date
 }
 
 type Query {
@@ -20,7 +31,7 @@ type Mutation {
   createAccount(data: userInput!): User!
   inactiveAccount(id: Int!): User! @isAuthenticated
   login(data: login!): authPayloadUser!
-  uploadProfile(userId: ID!, data: userProfileInput!): UserProfile! @isAuthenticated
+  uploadProfile(userId: ID!, data: userProfileInput!): User! @isAuthenticated
 }
 
 input login {

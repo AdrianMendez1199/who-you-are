@@ -62,4 +62,10 @@ export default {
 
     },
   },
+
+  User: {
+    posts(parent: any, args: any, context: Context) {
+      console.log(parent)
+    },
+  },
 };
