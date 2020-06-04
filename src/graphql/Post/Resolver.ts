@@ -38,6 +38,13 @@ export default {
       const { _id } = parent;
       return await db.Commentary.find({ post: _id });
     },
+
+    author: async (parent: {author: number}, _: void, context: Context) => {
+      const { db } = context;
+      const { author } = parent;
+      return await db.User.findOne({ _id: author });
+
+    },
   },
 
   Commentary: {

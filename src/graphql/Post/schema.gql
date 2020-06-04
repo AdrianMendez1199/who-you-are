@@ -2,6 +2,7 @@ type Post {
   id: ID!
   post: String!
   commentaries: [Commentary!]
+  author: User!
 }
 
 scalar Date
