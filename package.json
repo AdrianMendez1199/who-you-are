@@ -14,7 +14,9 @@
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "tsc",
-    "build": "npm-run-all clean compile",
+    "copy-gql": "./script/schema.sh",
+    "build": "npm-run-all clean compile copy-gql",
+    "prod": "node ./dist/index.js",
     "watch": "nodemon",
     "dev": "ts-node index.ts",
     "lint": "tslint --project ."
