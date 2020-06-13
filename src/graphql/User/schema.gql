@@ -42,6 +42,7 @@ input userInput {
   lastname: String!
   username: String!
   password: String!
+  age: Int!
 }
 
 directive @isAuthenticated on QUERY | FIELD | FIELD_DEFINITION

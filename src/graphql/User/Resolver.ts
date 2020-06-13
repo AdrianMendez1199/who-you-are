@@ -16,23 +16,19 @@ export default {
   },
 
   Mutation: {
-    createAccount: async (_: void, args: any, context: Context): Promise<User> => {
+    createAccount: async (_: void, args: any, context: Context): Promise<any> => {
       const { data } = args;
-      const { db } = context;
+      const { userservice } = context;
 
       data.password = await generatePassword(data.password);
-
       try {
-
-        const user: User = new db.User({
+        const response =  await userservice.createUser({
           ...data,
-        }).save();
-
-        return user;
+        });
+        console.log(response);
+        return response.user;
       } catch (e) {
-
         throw e;
-
       }
     },
 
@@ -64,7 +60,7 @@ export default {
   },
 
   User: {
-    posts: async (parent: any, args: any, context: Context) =>  {
+    posts: async (parent: any, args: any, context: Context) => {
       const { db } = context;
       return await db.Post.find({ author: parent.id });
     },
