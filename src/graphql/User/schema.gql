@@ -1,9 +1,11 @@
+scalar Date
+
 type User {
   id: ID!
   name: String!
   username: String!
   lastname: String!
-  age: Int
+  birthDay: Date
   bio: String
   avatar: String
   posts: [Post!]
@@ -11,7 +13,7 @@ type User {
 
 
 type Query {
-  user(id: ID!): [User!]! @isAuthenticated
+  user(username: String!): [User!]! @isAuthenticated
 }
 
 type Mutation {
@@ -27,7 +29,7 @@ input login {
 }
 
 input userProfileInput {
-  age: Int!
+  birthDay: Date!
   bio: String!
   imgProfile: String!
 }
@@ -42,7 +44,7 @@ input userInput {
   lastname: String!
   username: String!
   password: String!
-  age: Int!
+  birthDay: Date!
 }
 
 directive @isAuthenticated on QUERY | FIELD | FIELD_DEFINITION

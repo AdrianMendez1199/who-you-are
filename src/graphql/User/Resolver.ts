@@ -9,7 +9,7 @@ import {
 
 export default {
   Query: {
-    user: async (_: void, args: { id: number }, context: Context): Promise<User> => {
+    user: async (_: void, args: { username: string }, context: Context): Promise<User> => {
       const { db } = context;
       return await db.User.find();
     },
@@ -20,12 +20,11 @@ export default {
       const { data } = args;
       const { userservice } = context;
 
-      data.password = await generatePassword(data.password);
       try {
+        data.password = await generatePassword(data.password);
         const response =  await userservice.createUser({
           ...data,
         });
-        console.log(response);
         return response.user;
       } catch (e) {
         throw e;
