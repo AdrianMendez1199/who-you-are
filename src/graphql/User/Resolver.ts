@@ -9,12 +9,13 @@ import {
 
 export default {
   Query: {
-    getUserByUsername: async (_: void, args: { username: string }, context: Context) => {
+    getUserByUsername: async (_: void, args: { username: string }, context: Context): Promise<User> => {
       const { UserService } = context;
       const { username } = args;
+
       try {
         const response = await UserService.getUserByUsername({ username });
-        return response;
+        return response.user;
       }catch (e) {
         throw e;
       }
@@ -22,7 +23,7 @@ export default {
   },
 
   Mutation: {
-    createAccount: async (_: void, args: any, context: Context): Promise<any> => {
+    createAccount: async (_: void, args: any, context: Context): Promise<User> => {
       const { data } = args;
       const { UserService } = context;
 
@@ -71,7 +72,7 @@ export default {
   },
 
   User: {
-    posts: async (parent: any, args: any, context: Context) => {
+    posts: async (parent: { id: number }, _: void, context: Context) => {
       const { db } = context;
       return await db.Post.find({ author: parent.id });
     },
