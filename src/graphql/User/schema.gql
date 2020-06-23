@@ -13,7 +13,7 @@ type User {
 
 
 type Query {
-  user(username: String!): [User!]! @isAuthenticated
+  getUserByUsername(username: String!): [User!]! @isAuthenticated
 }
 
 type Mutation {

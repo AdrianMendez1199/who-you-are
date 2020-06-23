@@ -13,12 +13,11 @@ process.on('unhandledRejection', (reason, promise): void => {
   console.log(`reason: ${reason}, promise: ${promise}`);
 });
 
-const userservice = UserService.UserService;
 
 const server: ApolloServer = new ApolloServer({
   typeDefs,
   resolvers,
-  context: (request): Context => ({ request, db, pubsub, userservice }),
+  context: (request): Context => ({ request, db, pubsub, UserService }),
   schemaDirectives: { isAuthenticated: IsAuthenticated },
 });
 
