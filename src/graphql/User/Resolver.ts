@@ -9,30 +9,32 @@ import {
 
 export default {
   Query: {
-    user: async (_: void, args: { id: number }, context: Context): Promise<User> => {
-      const { db } = context;
-      return await db.User.find();
+    getUserByUsername: async (_: void, args: { username: string }, context: Context) => {
+      const { UserService } = context;
+      const { username } = args;
+      try {
+        const response = await UserService.getUserByUsername({ username });
+        return response;
+      }catch (e) {
+        throw e;
+      }
     },
   },
 
   Mutation: {
-    createAccount: async (_: void, args: any, context: Context): Promise<User> => {
+    createAccount: async (_: void, args: any, context: Context): Promise<any> => {
       const { data } = args;
-      const { db } = context;
-
-      data.password = await generatePassword(data.password);
+      const { UserService } = context;
 
       try {
-
-        const user: User = new db.User({
+        data.password = await generatePassword(data.password);
+        const response =  await UserService.createUser({
           ...data,
-        }).save();
+        });
 
-        return user;
+        return response.user;
       } catch (e) {
-
         throw e;
-
       }
     },
 
@@ -40,31 +42,36 @@ export default {
       const { db } = context;
       const { data } = args;
 
-      const user = await db.User
-        .findOne({ username: data.username })
-        .select('+password');
+      try {
 
-      if (!user) {
-        throw new Error('Invalid Credentials');
+        const user = await db.User
+          .findOne({ username: data.username })
+          .select('+password');
+
+        if (!user) {
+          throw new Error('Invalid Credentials');
+        }
+
+        const isCorrectPassword = await comparePassword(data.password, user.password);
+
+        if (!isCorrectPassword) {
+          throw new Error('Invalid Credentials');
+        }
+
+
+        return {
+          user: user.toJSON(),
+          token: generateToken(user.toJSON()),
+        };
+      } catch (e) {
+        throw e;
       }
-
-      const isCorrectPassword = await comparePassword(data.password, user.password);
-
-      if (!isCorrectPassword) {
-        throw new Error('Invalid Credentials');
-      }
-
-
-      return {
-        user: user.toJSON(),
-        token: generateToken(user.toJSON()),
-      };
 
     },
   },
 
   User: {
-    posts: async (parent: any, args: any, context: Context) =>  {
+    posts: async (parent: any, args: any, context: Context) => {
       const { db } = context;
       return await db.Post.find({ author: parent.id });
     },
